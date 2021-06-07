@@ -18,6 +18,8 @@
 				<input v-model="apologyEvent"></input>
 				<br>
 				<button @click="generate">生成</button>
+				<span>  </span>
+				<button @click="copyToClip">复制</button>
 			</div>
 			<hr>
 			<p>关于{{apologyEvent}}致最亲爱的{{apologyName}}的道歉信</p>
@@ -122,15 +124,28 @@
 				//认错事件
 				content += this.apology[Math.floor(Math.random() * this.apology.length)].replace('event', this
 					.apologyEvent);
-				
+
 				//认错文字
 				content += this.apology_text[Math.floor(Math.random() * this.apology_text.length)];
-				
+
 				//认错事件
 				content += this.apology[Math.floor(Math.random() * this.apology.length)].replace('event', this
 					.apologyEvent);
 
 				this.letterOfApology = content
+			},
+			copyToClip() {
+				let transfer = document.createElement('input');
+				document.body.appendChild(transfer);
+				transfer.value = this.letterOfApology; // 这里表示想要复制的内容
+				transfer.focus();
+				transfer.select();
+				if (document.execCommand('copy')) {
+					document.execCommand('copy');
+				}
+				transfer.blur();
+				document.body.removeChild(transfer);
+
 			}
 		}
 	})
